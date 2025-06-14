@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sayuri Market - Edredones, Casacas y Gorros</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .products {
+            padding: 4rem 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            margin: 2rem 0;
+            border-radius: 20px;
+        }
+
+        .products h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .product-icon {
+            font-size: 4rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .product-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            color: #333;
+        }
+
+        .product-card p {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #666;
+        }
+
+        .price-range {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #667eea;
+        }
+
+        .info-btn, .buy-btn {
+            width: 100%;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .info-btn {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+        }
+
+        .info-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(40, 167, 69, 0.3);
+        }
+
+        .buy-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .buy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            right: 1.5rem;
+            top: 1rem;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+
+        .models-grid {
+            display: grid;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .model-item {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .model-item:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+        }
+
+        .model-item.selected {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .model-info {
+            flex: 1;
+        }
+
+        .model-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+            object-fit: cover;
+            min-width: 100px;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 0.8rem;
+        }
+
+        .model-item.selected {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+        }
+
+        .selected-count {
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            position: absolute;
+            top: -10px;
+            right: -10px;
+        }
+
+        .model-item {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            position: relative;
+        }
+
+        .selection-summary {
+            background: #e9ecef;
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            display: none;
+        }
+
+        .selection-summary.show {
+            display: block;
+        }
+
+        .selected-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .selected-item:last-child {
+            border-bottom: none;
+        }
+
+        .remove-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .model-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .model-name {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .model-price {
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .quantity-selector {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 1.5rem 0;
+            gap: 1rem;
+        }
+
+        .quantity-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quantity-btn:hover {
+            background: #764ba2;
+            transform: scale(1.1);
+        }
+
+        .quantity-display {
+            font-size: 1.2rem;
+            font-weight: bold;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .confirm-btn {
+            width: 100%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 1rem;
+        }
+
+        .confirm-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .confirm-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .whatsapp-info {
+            background: #25D366;
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .whatsapp-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        footer {
+            background: rgba(0,0,0,0.8);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .logo {
+                font-size: 2rem;
+            }
+            
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                margin: 10% auto;
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Sayuri Market</div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>¡Bienvenidos a Sayuri Market!</h1>
+            <p>Tu tienda de confianza para edredones, casacas y gorros de calidad</p>
+        </div>
+    </section>
+
+    <section class="products">
+        <div class="container">
+            <h2>Nuestros Productos</h2>
+            
+            <div class="product-grid">
+                <div class="product-card">
+                    <div class="product-icon">???</div>
+                    <h3>Edredones</h3>
+                    <p>Edredones cómodos y calientitos para un descanso perfecto</p>
+                    <div class="price-range">S/ 40 - S/ 60</div>
+                    <button class="info-btn" onclick="showModels('edredones')">Ver Modelos</button>
+                    <button class="buy-btn" onclick="showModels('edredones')">Comprar</button>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-icon">??</div>
+                    <h3>Casacas</h3>
+                    <p>Casacas modernas y abrigadoras para cualquier ocasión</p>
+                    <div class="price-range">S/ 30 - S/ 80</div>
+                    <button class="info-btn" onclick="showModels('casacas')">Ver Modelos</button>
+                    <button class="buy-btn" onclick="showModels('casacas')">Comprar</button>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-icon">??</div>
+                    <h3>Gorros</h3>
+                    <p>Gorros stylish para mantenerte abrigado con estilo</p>
+                    <div class="price-range">S/ 10 - S/ 29</div>
+                    <button class="info-btn" onclick="showModels('gorros')">Ver Modelos</button>
+                    <button class="buy-btn" onclick="showModels('gorros')">Comprar</button>
+                </div>
+            </div>
+
+            <div class="whatsapp-info">
+                <h3>?? ¡Compra por WhatsApp!</h3>
+                <p>Selecciona tu modelo favorito y se abrirá WhatsApp con tu pedido listo para enviar</p>
+                <p><strong>Número: +51 955 360 417</strong></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal para mostrar modelos -->
+    <div id="modelsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle">Selecciona tus modelos</h2>
+            <div id="modelsContainer" class="models-grid"></div>
+            <div class="selection-summary" id="selectionSummary">
+                <h4>Productos seleccionados:</h4>
+                <div id="selectedItems"></div>
+                <div style="margin-top: 1rem; font-weight: bold; text-align: right;">
+                    Total: S/ <span id="totalPrice">0</span>
+                </div>
+            </div>
+            <button class="confirm-btn" id="confirmBtn" onclick="confirmPurchase()" disabled>Comprar Productos Seleccionados</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Sayuri Market. Todos los derechos reservados.</p>
+            <p>Contacto: +51 955 360 417</p>
+        </div>
+    </footer>
+
+    <script>
+        const products = {
+            edredones: {
+                title: 'Edredones',
+                icon: '???',
+                models: [
+                    { name: 'Edredón Clásico Individual', price: 40, description: 'Suave y cómodo para una persona', image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop' },
+                    { name: 'Edredón Clásico Matrimonial', price: 45, description: 'Perfecto para parejas', image: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=400&h=300&fit=crop' },
+                    { name: 'Edredón Premium Individual', price: 50, description: 'Calidad superior, muy abrigador', image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop&brightness=1.2' },
+                    { name: 'Edredón Premium Matrimonial', price: 55, description: 'Lujo y comodidad para dos', image: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=400&h=300&fit=crop&brightness=1.2' },
+                    { name: 'Edredón Deluxe King Size', price: 60, description: 'El más amplio y lujoso', image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop&saturation=1.3' }
+                ]
+            },
+            casacas: {
+                title: 'Casacas',
+                icon: '??',
+                models: [
+                    { name: 'Casaca Básica', price: 30, description: 'Simple y funcional', image: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400&h=300&fit=crop' },
+                    { name: 'Casaca Deportiva', price: 40, description: 'Ideal para ejercicio y actividades', image: 'https://images.unsplash.com/photo-1544966503-7cc5ac882d5d?w=400&h=300&fit=crop' },
+                    { name: 'Casaca Casual', price: 50, description: 'Perfecta para el día a día', image: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400&h=300&fit=crop&brightness=1.1' },
+                    { name: 'Casaca Fashion', price: 60, description: 'Moderna y con estilo', image: 'https://images.unsplash.com/photo-1544966503-7cc5ac882d5d?w=400&h=300&fit=crop&brightness=1.1' },
+                    { name: 'Casaca Premium', price: 70, description: 'Materiales de alta calidad', image: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400&h=300&fit=crop&saturation=1.2' },
+                    { name: 'Casaca de Lujo', price: 80, description: 'La mejor calidad y diseño', image: 'https://images.unsplash.com/photo-1544966503-7cc5ac882d5d?w=400&h=300&fit=crop&saturation=1.2' }
+                ]
+            },
+            gorros: {
+                title: 'Gorros',
+                icon: '??',
+                models: [
+                    { name: 'Gorro Básico', price: 10, description: 'Sencillo y económico', image: 'https://images.unsplash.com/photo-1576871337632-b9aef4c17ab9?w=400&h=300&fit=crop' },
+                    { name: 'Gorro de Lana', price: 15, description: 'Abrigador para el frío', image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop' },
+                    { name: 'Gorro Deportivo', price: 18, description: 'Para actividades físicas', image: 'https://images.unsplash.com/photo-1576871337632-b9aef4c17ab9?w=400&h=300&fit=crop&brightness=1.1' },
+                    { name: 'Gorro Fashion', price: 22, description: 'Moderno y con estilo', image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop&brightness=1.1' },
+                    { name: 'Gorro Premium', price: 25, description: 'Calidad superior', image: 'https://images.unsplash.com/photo-1576871337632-b9aef4c17ab9?w=400&h=300&fit=crop&saturation=1.2' },
+                    { name: 'Gorro de Diseñador', price: 29, description: 'Exclusivo y elegante', image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop&saturation=1.2' }
+                ]
+            }
+        };
+
+        let currentProduct = '';
+        let selectedModels = [];
+
+        function showModels(productType) {
+            currentProduct = productType;
+            const product = products[productType];
+            const modal = document.getElementById('modelsModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modelsContainer = document.getElementById('modelsContainer');
+
+            modalTitle.textContent = `${product.icon} ${product.title} - Selecciona tus modelos`;
+            
+            modelsContainer.innerHTML = '';
+            product.models.forEach((model, index) => {
+                const modelDiv = document.createElement('div');
+                modelDiv.className = 'model-item';
+                modelDiv.onclick = () => toggleModelSelection(index);
+                
+                modelDiv.innerHTML = `
+                    <img class="model-image" src="${model.image}" alt="${model.name}" onerror="this.innerHTML='Imagen no disponible'; this.style.display='flex'; this.style.alignItems='center'; this.style.justifyContent='center';">
+                    <div class="model-info">
+                        <div class="model-details">
+                            <span class="model-name">${model.name}</span>
+                            <span class="model-price">S/ ${model.price}</span>
+                        </div>
+                        <div style="color: #666; font-size: 0.9rem;">${model.description}</div>
+                    </div>
+                `;
+                
+                modelsContainer.appendChild(modelDiv);
+            });
+
+            // Reset selections
+            selectedModels = [];
+            updateSelectionSummary();
+            
+            modal.style.display = 'block';
+        }
+
+        function toggleModelSelection(modelIndex) {
+            const product = products[currentProduct];
+            const model = product.models[modelIndex];
+            const modelDiv = document.querySelectorAll('.model-item')[modelIndex];
+            
+            const existingIndex = selectedModels.findIndex(item => 
+                item.productType === currentProduct && item.modelIndex === modelIndex
+            );
+            
+            if (existingIndex > -1) {
+                // Remove from selection
+                selectedModels.splice(existingIndex, 1);
+                modelDiv.classList.remove('selected');
+                const countElement = modelDiv.querySelector('.selected-count');
+                if (countElement) countElement.remove();
+            } else {
+                // Add to selection
+                selectedModels.push({
+                    productType: currentProduct,
+                    modelIndex: modelIndex,
+                    name: model.name,
+                    price: model.price,
+                    description: model.description,
+                    quantity: 1
+                });
+                modelDiv.classList.add('selected');
+                
+                const countElement = document.createElement('div');
+                countElement.className = 'selected-count';
+                countElement.textContent = '1';
+                modelDiv.appendChild(countElement);
+            }
+            
+            updateSelectionSummary();
+        }
+
+        function updateSelectionSummary() {
+            const summaryDiv = document.getElementById('selectionSummary');
+            const selectedItemsDiv = document.getElementById('selectedItems');
+            const totalPriceSpan = document.getElementById('totalPrice');
+            const confirmBtn = document.getElementById('confirmBtn');
+            
+            if (selectedModels.length === 0) {
+                summaryDiv.classList.remove('show');
+                confirmBtn.disabled = true;
+                return;
+            }
+            
+            summaryDiv.classList.add('show');
+            confirmBtn.disabled = false;
+            
+            selectedItemsDiv.innerHTML = '';
+            let total = 0;
+            
+            selectedModels.forEach((item, index) => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'selected-item';
+                itemDiv.innerHTML = `
+                    <div>
+                        <strong>${item.name}</strong><br>
+                        <small>Cantidad: ${item.quantity} - S/ ${item.price} c/u</small>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div class="quantity-selector" style="margin: 0;">
+                            <button class="quantity-btn" style="width: 30px; height: 30px; font-size: 1rem;" onclick="changeItemQuantity(${index}, -1)">-</button>
+                            <span style="margin: 0 10px; font-weight: bold;">${item.quantity}</span>
+                            <button class="quantity-btn" style="width: 30px; height: 30px; font-size: 1rem;" onclick="changeItemQuantity(${index}, 1)">+</button>
+                        </div>
+                        <button class="remove-btn" onclick="removeItem(${index})">×</button>
+                    </div>
+                `;
+                selectedItemsDiv.appendChild(itemDiv);
+                total += item.price * item.quantity;
+            });
+            
+            totalPriceSpan.textContent = total.toFixed(2);
+        }
+
+        function changeItemQuantity(itemIndex, change) {
+            const item = selectedModels[itemIndex];
+            const newQuantity = item.quantity + change;
+            
+            if (newQuantity >= 1) {
+                item.quantity = newQuantity;
+                
+                // Update the count badge
+                const modelDiv = document.querySelectorAll('.model-item')[item.modelIndex];
+                const countElement = modelDiv.querySelector('.selected-count');
+                if (countElement) {
+                    countElement.textContent = newQuantity;
+                }
+                
+                updateSelectionSummary();
+            }
+        }
+
+        function removeItem(itemIndex) {
+            const item = selectedModels[itemIndex];
+            
+            // Remove visual selection
+            const modelDiv = document.querySelectorAll('.model-item')[item.modelIndex];
+            modelDiv.classList.remove('selected');
+            const countElement = modelDiv.querySelector('.selected-count');
+            if (countElement) countElement.remove();
+            
+            // Remove from array
+            selectedModels.splice(itemIndex, 1);
+            updateSelectionSummary();
+        }
+
+        function confirmPurchase() {
+            if (selectedModels.length === 0) return;
+            
+            let message = `¡Hola! Me interesa comprar los siguientes productos:\n\n`;
+            let total = 0;
+            
+            selectedModels.forEach((item, index) => {
+                const subtotal = item.price * item.quantity;
+                total += subtotal;
+                
+                message += `${index + 1}. ${item.name}\n`;
+                message += `   ?? Cantidad: ${item.quantity}\n`;
+                message += `   ?? Precio unitario: S/ ${item.price}.00\n`;
+                message += `   ?? Subtotal: S/ ${subtotal}.00\n`;
+                message += `   ?? ${item.description}\n\n`;
+            });
+            
+            message += `?? TOTAL GENERAL: S/ ${total.toFixed(2)}\n\n`;
+            message += `¿Podrías darme más información sobre la disponibilidad y el proceso de compra?\n\n¡Gracias!`;
+            
+            const whatsappUrl = `https://wa.me/51955360417?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+            
+            closeModal();
+        }
+
+        function closeModal() {
+            document.getElementById('modelsModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('modelsModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
